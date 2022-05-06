@@ -1,6 +1,6 @@
 <%- include('partials/header') %>
         <div class="pure-g">
-          // j'utilise les balises ejs avec un if pour n'afficher que l'article demander dans l'index 
+           <!-- j'utilise les balises ejs avec un if pour n'afficher que l'article demander dans l'index  -->
           <% if(locals.clickedArticle.id) {%>
           <article class="post pure-u-1">
             <header>
@@ -11,7 +11,7 @@
               </div>
             </header>
             <figure class="post-picture">
-              <img class="pure-img" src="images/<%= clickedArticle.img %>" alt="<%= clickedArticle.img_alt %>">
+              <img class="pure-img" src="/images/<%= clickedArticle.img %>" alt="<%= clickedArticle.img_alt %>">
               <figcaption class="post-picture-caption"><%= clickedArticle.sub_title %></figcaption>
             </figure>
             <div class="post-content">
