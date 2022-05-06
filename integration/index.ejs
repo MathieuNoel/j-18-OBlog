@@ -1,38 +1,62 @@
 <%- include('partials/header') %>
-        <h1 class="content-title">Les actualités du blog</h1>
-        <div >
-          <form action="/sendForm" method="GET">
-            <label for="search">Recherche</label>
-            <input type="text" name="search" id="search" placeholder="Tapez votre catégorie ici !">
-            <button>Rechercher</button>
-          </form>
-          <% if(locals.articles) { %>
-          <div>
+  <h1 class="content-title">Les actualités du blog</h1>
+  <div>
+    <!-- on t'en demandait pas tant ! mais pourquoi pas ! Dans ce cas là pense à utiliser les query strings de l'autre côté ;) (req.query.search) sur la route /sendForm -->
+    <form action="/sendForm" method="GET">
+      <label for="search">Recherche</label>
+      <input type="text" name="search" id="search" placeholder="Tapez votre catégorie ici !">
+      <button>Rechercher</button>
+    </form>
+    <!-- Non ! Il ne faut pas boucler sur tous les articles car on veut récupérer ici toutes les catégories uniquement ! -->
+    <%# if(locals.articles) { %>
+      <!-- <div>
             <ul>
-              <% for(const select of locals.articles) {%>
-                <li><a href="/article/<%= select.id %>"><%= select.category %></a></li>
-              <% }%>
+              <%# for(const select of locals.articles) {%>
+                <li><a href="/article/<%# select.id %>"><%# select.category %></a></li>
+              <%# }%>
             </ul>
-          </div>
-          <% } %>
+          </div> -->
+      <%# } %>
+        <div>
+          <ul>
+            <% for(const category of categories) { %>
+              <li>
+                <%# la route permettant de rechercher des articles selon une catégorie est /sendForm en lui précisant en
+                  queryString search=valeur %>
+                  <a href="/sendForm?search=<%=category%>">
+                    <%=category%>
+                  </a>
+              </li>
+              <% } %>
+          </ul>
+        </div>
+
+
         <div class="pure-g">
-           <!-- j'utilise une boucle for of pour retourner chaques articles avec les données contenu dans locals.articles  -->
+          <!-- j'utilise une boucle for of pour retourner chaques articles avec les données contenu dans locals.articles  -->
           <% for(const article of locals.articles) {%>
-          <article class="card pure-u-1 pure-u-lg-1-2 pure-u-xl-1-3">
-            <header>
-              <img class="card-img pure-img" src="images/<%= article.img %>" alt="<%= article.img_alt %>">
-              <h2><%= article.title %></h2>
-              <div class="card-meta">
-                Par <a href="#"><%= article.author %></a> 
-                dans la catégorie <a href="#"><%= article.category %></a>
-              </div>
-            </header>            
-            <p>
-              <%= article.text %>
-            </p>
-            <a class="card-action pure-button" href="article/<%= article.id %>">Lire l'article</a>
-          </article>
-          <% } %> 
-        
-           </div>         
+            <article class="card pure-u-1 pure-u-lg-1-2 pure-u-xl-1-3">
+              <header>
+                <img class="card-img pure-img" src="images/<%= article.img %>" alt="<%= article.img_alt %>">
+                <h2>
+                  <%= article.title %>
+                </h2>
+                <div class="card-meta">
+                  Par <a href="#">
+                    <%= article.author %>
+                  </a>
+                  dans la catégorie <a href="/sendForm?search=<%=article.category%>">
+                    <%= article.category %>
+                  </a>
+                </div>
+              </header>
+              <p>
+                <%# on veut les 30 premiers caractères (bonus 4) %>
+                  <%= article.text.substring(0, 30) %>...
+              </p>
+              <a class="card-action pure-button" href="article/<%= article.id %>">Lire l'article</a>
+            </article>
+            <% } %>
+
+        </div>
         <%- include('partials/footer') %>

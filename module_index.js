@@ -1,3 +1,5 @@
+// Rebelote 
+
 // j'importe le module express pour utiliser ces fichier
 const express = require(`express`);
 // j'importe mon tableau d'article
@@ -16,4 +18,4 @@ index.get(`/`, (req, res) => {
   });
 });
 
-module.exports= index
+module.exports = index
