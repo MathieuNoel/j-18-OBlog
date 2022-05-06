@@ -6,8 +6,10 @@ const app = express();
 app.set(`view engine`, `ejs`);
 // je précise à express où se situe le dossier views
 app.set(`views`, `./integration/`);
-
+// je rend disponible les fichier static
 app.use(express.static('./static/'));
+
+app.use(express.urlencoded({extended: true}));
 // je require mon router
 const router = require(`./router`);
 // je rattache le router créé dans router.js à mon serveur stocké dans app
