@@ -6,15 +6,19 @@
             <input type="text" name="search" id="search" placeholder="Tapez votre catégorie ici !">
             <button>Rechercher</button>
           </form>
-          <% if(locals.articles) { %>
           <div>
             <ul>
-              <% for(const select of locals.articles) {%>
-                <li><a href="/article/<%= select.id %>"><%= select.category %></a></li>
-              <% }%>
+              <% for(const category of categories) { %>
+                <li>
+                  <%# la route permettant de rechercher des articles selon une catégorie est /sendForm en lui précisant en
+                    queryString search=valeur %>
+                    <a href="/sendForm?search=<%=category%>">
+                      <%= category %>
+                    </a>
+                </li>
+                <% } %>
             </ul>
           </div>
-          <% } %>
         <div class="pure-g">
            <!-- j'utilise une boucle for of pour retourner chaques articles avec les données contenu dans locals.articles  -->
           <% for(const article of locals.articles) {%>
@@ -28,7 +32,11 @@
               </div>
             </header>            
             <p>
-              <%= article.text %>
+              <!--la je décide de n'afficher que les 30 premiers mots de mon texte sur l'index avec un split(" ") et une boucle for-->
+              <% let word = article.text.split(" "); %>
+                <% for(let i = 0; i<30;i++){ %>
+                <%= word[i]%>
+               <% } %> 
             </p>
             <a class="card-action pure-button" href="article/<%= article.id %>">Lire l'article</a>
           </article>

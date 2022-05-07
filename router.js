@@ -5,23 +5,15 @@ const router = express.Router();
 // j'importe mon tableau d'article
 const articles = require(`./data/articles.json`);
 
-const form= require(`./module_form`)
-const dynamique= require(`./module_dynamique`)
-const index= require(`./module_index`)
+// j'importe le controller, c'est à dire l'objet contenant mes méthodes de route (middlewares)
+const controller = require('./controller');
+// pour chaque route, je lui passe en second paramètre la méthode adéquate du controller (sans les parenthèses car je veut juste lui transmettre la fonction, pas l'executer !)
+router.get('/', controller.index);
 
-router.use(index)
+router.get('/article/:id', controller.dynamique);
 
-router.use(dynamique);
+router.get('/sendForm', controller.form);
 
-router.use(form);
-// router.get('/sendForm',(req, res) => {
-//   const search = req.query.search.toLowerCase()
-//   // const searchGames = games.filter(g => g.title.includes(search))
-//   const searchArticle = search ? articles.filter(a => a.category.toLowerCase().includes(search)) : false;
-//   res.render('index', {
-//     searchArticle
-//   })
-  
-// })
+
 // j'exporte mon module
 module.exports = router;
